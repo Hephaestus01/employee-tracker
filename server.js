@@ -9,8 +9,8 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//for apiRoutes
-// app.use('/api', apiRoutes);
+// for apiRoutes
+app.use('/api', apiRoutes);
 
 // default response for any other request (not found)
 app.use((req, res) => {

@@ -18,7 +18,13 @@ VALUES
 INSERT INTO employees
     (first_name, last_name, role_id, manager_id)
 VALUES
-('John', 'Terry', 1, 0),
+('John', 'Terry', 1, NULL),
 ('Cristiano', 'Ronaldo', 2, 1),
 ('Lionel', 'Messi', 2, 1),
-('John', 'Doe', 3, 0);
+('John', 'Doe', 3, NULL),
+('Marilyn', 'Monroe', 3, NULL),
+('Jane', 'Smith', 4, 3),
+('Little', 'Richard', 5, NULL),
+('Alex', 'Morgan', 6, 5),
+('James', 'Taylor', 7, NULL),
+('Jill', 'Smith', 8, 7);
