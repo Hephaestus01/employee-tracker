@@ -1,22 +1,54 @@
+const db = require('./db/connection');
 const inquirer = require('inquirer');
+const cTable = require('console.table');
 
 app(false);
 
+db.connect(err => {
+    if (err) throw err;
+    console.log('Database connected.');
+    });
+
 const optionMethods = {
+    listDepartments: () => {
+        const sql = `SELECT * FROM departments`;
+        db.query(sql, (err, result) => {
+            if (err) throw err;
+            console.table(result);
+        });
+        return false;
+    },
     listEmployees: () => {
-        console.log('You have no employees...')
+        const sql = `SELECT * FROM employees`;
+        db.query(sql, (err, result) => {
+            if (err) throw err;
+            console.table(result);
+        });
+        return false;
+    },
+    listRoles: () => {
+        const sql = `SELECT * FROM roles`;
+        db.query(sql, (err, result) => {
+            if (err) throw err;
+            console.table(result);
+        });
         return false;
     },
     addEmployee: async () => {
-        const employeeData = await inquirer.prompt([{
-            type: 'input', name: 'name', message: 'whats the name of the employee?'
-        },
-        { type: 'input', name: 'salary', message: 'whats should be their salary?' }]);
-        console.log(employeeData)
+        const employeeData = await inquirer.prompt([
+            { type: 'input', name: 'first_name', message: "Enter employee's first name" },
+            { type: 'input', name: 'last_name', message: "Enter employee's last name" },
+            { type: 'input', name: 'salary', message: 'Enter employee salary' }])
+            .then(console.log(employeeData))
+            .then(
+                
+        )
+
+
         return false;
     },
     exit: () => true
-}
+};
 
 async function app(shouldExit) {
     if (shouldExit) {
@@ -25,7 +57,7 @@ async function app(shouldExit) {
     }
     // present user with options
     const { option } = await presentOptions();
-    console.log(option)
+
     // excecute an option
     shouldExit = await optionMethods[option]();
     app(shouldExit);
@@ -50,15 +82,15 @@ function presentOptions() {
     return inquirer.prompt(optionQuestions)
 }
 
-function presentOptions() {
-    const optionQuestions = [{
-        type: 'list',
-        name: 'optionEmployee',
-        message: 'Please select operation from the following list',
-        choices: [{ name: 'See all Employees', value: 'listEmployees' }, { name: 'Add new Employee', value: 'addEmployee' }, 'exit']
-    }]
-    return inquirer.prompt(optionQuestions)
-}
+// function presentOptions() {
+//     const optionQuestions = [{
+//         type: 'list',
+//         name: 'optionEmployee',
+//         message: 'Please select operation from the following list',
+//         choices: [{ name: 'See all Employees', value: 'listEmployees' }, { name: 'Add new Employee', value: 'addEmployee' }, 'exit']
+//     }]
+//     return inquirer.prompt(optionQuestions)
+// }
 
 
 
