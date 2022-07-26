@@ -4,7 +4,7 @@ const db = require('../../db/connection');
 const inputCheck = require('../../utils/inputCheck');
 
 // Get all departments
-router.get('/departments', (req, res) => {
+const getDeptRoutes = router.get('/departments', (req, res) => {
     const sql = `SELECT * FROM departments`;
 
     db.query(sql, (err, rows) => {
@@ -17,6 +17,7 @@ router.get('/departments', (req, res) => {
             data: rows
         });
     });
+    console.log("hello");
 });
 
 router.post('/department', ({ body }, res) => {
@@ -64,3 +65,4 @@ router.delete('/department/:id', (req, res) => {
 })
 
 module.exports = router;
+module.exports = getDeptRoutes;
