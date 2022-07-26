@@ -12,6 +12,7 @@ db.connect(err => {
 const optionMethods = {
     listDepartments: () => {
         const sql = `SELECT * FROM departments`;
+        
         db.query(sql, (err, result) => {
             if (err) throw err;
             console.table(result);
@@ -20,6 +21,7 @@ const optionMethods = {
     },
     listEmployees: () => {
         const sql = `SELECT * FROM employees`;
+        
         db.query(sql, (err, result) => {
             if (err) throw err;
             console.table(result);
@@ -28,6 +30,7 @@ const optionMethods = {
     },
     listRoles: () => {
         const sql = `SELECT * FROM roles`;
+        
         db.query(sql, (err, result) => {
             if (err) throw err;
             console.table(result);
@@ -38,13 +41,19 @@ const optionMethods = {
         const employeeData = await inquirer.prompt([
             { type: 'input', name: 'first_name', message: "Enter employee's first name" },
             { type: 'input', name: 'last_name', message: "Enter employee's last name" },
-            { type: 'input', name: 'salary', message: 'Enter employee salary' }])
-            .then(console.log(employeeData))
-            .then(
-                
-        )
-
-
+            { type: 'number', name: 'role_id', message: 'Enter employee role' }])
+        // console.log(employeeData)
+        const sql_1 = `INSERT INTO employees (first_name, last_name, role_id) VALUES (${employeeData[0]}, ${employeeData[1]}, ${employeeData[2]})`  ;
+        const sql_2 = `SELECT * FROM employees`;
+                        // VALUES (${employeeData[0]}, ${employeeData[1]}, ${employeeData[2]});
+       
+        db.query(sql_1, (err, result) => {
+            if (err) throw err;
+        });
+        db.query(sql_2, (err, result) => {
+            if (err) throw err;
+            console.table(result);
+        });
         return false;
     },
     exit: () => true
@@ -75,7 +84,7 @@ function presentOptions() {
             { name: 'Add Department', value: 'addDepartment' },
             { name: 'Add Employee', value: 'addEmployee' },
             {name: 'Update Employee Role', value: 'updateRole'},
-            { name: 'Add New Employee', value: 'addEmployee' }, 'Exit',
+            'Exit',
             ]
     }]
 
